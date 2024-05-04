@@ -21,6 +21,8 @@ public class Contact
     public string signature;
     public DateTime contractEndDate;
     public string note;
-    
-    
+
+    public ICollection<ContactFurniture> ContactFurnitures { get; set; } = new List<ContactFurniture>();
+
+    public ICollection<ContactService> ContactServices { get; set; } = new List<ContactService>();
 }

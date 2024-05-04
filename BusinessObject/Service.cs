@@ -7,4 +7,7 @@ public class Service
     public string dvt;
     public int oldNumber;
     public string name;
+    
+    public ICollection<ContactService> ContactServices { get; set; } = new List<ContactService>();
+
 }

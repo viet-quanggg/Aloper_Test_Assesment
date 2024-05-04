@@ -8,4 +8,7 @@ public class Furniture
     public string name;
     public string status;
     public bool isActive;
+    
+    public ICollection<ContactFurniture> ContactFurnitures { get; set; } = new List<ContactFurniture>();
+
 }
