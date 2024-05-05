@@ -83,10 +83,83 @@ public class ContactManagement
             }
             else
             {
-                throw new DuplicateNameException(contact.id);
+                throw new DuplicateNameException("Contact with id: " + contact.id + " is existed!");
             }
 
             return contact;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+    
+    public async Task<Contact> UpdateContact(string id, Contact contact)
+    {
+        _context = new AloperContext();
+        try
+        {
+            var exitedContact = await _context.Contacts.FirstOrDefaultAsync(c => c.id == id);
+            if (exitedContact != null)
+            {
+                exitedContact.idRoom = contact.idRoom;
+                exitedContact.rentalTerm = contact.rentalTerm;
+                exitedContact.depositDate = contact.depositDate;
+                exitedContact.depositAmount = contact.depositAmount;
+                exitedContact.retailPrice = contact.retailPrice;
+                exitedContact.rentalStartDate = contact.rentalStartDate;
+                exitedContact.numberOfPeople = contact.numberOfPeople;
+                exitedContact.numberOfVehicle = contact.numberOfVehicle;
+                exitedContact.fullName = contact.fullName;
+                exitedContact.phoneNumber = contact.phoneNumber;
+                exitedContact.birthOfDay = contact.birthOfDay;
+                exitedContact.identification = contact.identification;
+                exitedContact.dateRange = contact.dateRange;
+                exitedContact.issuedBy = contact.issuedBy;
+                exitedContact.permanentAddress = contact.permanentAddress;
+                exitedContact.signature = contact.signature;
+                exitedContact.contractEndDate = contact.contractEndDate;
+                exitedContact.note = contact.note;
+
+                exitedContact.ContactServices = contact.ContactServices;
+                exitedContact.ContactFurnitures = contact.ContactFurnitures;
+                
+                _context.Attach(exitedContact).State = EntityState.Modified;
+                
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new DuplicateNameException("Contact with id: " + contact.id + " is not found!");
+            }
+
+            return contact;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+    
+    public async Task<Contact> CancelContactById(string id)
+    {
+        _context = new AloperContext();
+        try
+        {
+            var exitedContact = await _context.Contacts.FirstOrDefaultAsync(c => c.id == id);
+            if (exitedContact != null)
+            {
+                exitedContact.rentalTerm = 0;
+                _context.Attach(exitedContact).State = EntityState.Modified;
+                
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new DuplicateNameException("Contact with id: " + id + " is not found!");
+            }
+
+            return exitedContact;
         }
         catch (Exception ex)
         {

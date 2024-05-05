@@ -45,6 +45,8 @@ public class AloperContext : DbContext
         modelBuilder.Entity<Contact>(entity =>
         {
             entity.HasKey(c => c.id);
+            entity.HasMany(c => c.ContactServices)
+                .WithOne(c => c.Contact);
         });
 
         modelBuilder.Entity<Furniture>(entity =>

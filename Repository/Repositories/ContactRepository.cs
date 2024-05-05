@@ -12,4 +12,14 @@ public class ContactRepository : IContactRepository
     {
       return await ContactManagement.Instance.CreateContact(contact);
     }
+
+    public async Task<Contact> UpdateContact(string id, Contact contact)
+    {
+        return await ContactManagement.Instance.UpdateContact(id, contact);
+    }
+
+    public async Task<Contact> CancelContactById(string id)
+    {
+        return await ContactManagement.Instance.CancelContactById(id);
+    }
 }

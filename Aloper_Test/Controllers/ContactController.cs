@@ -32,8 +32,23 @@ public class ContactController : ControllerBase
     }
 
     [HttpPost("/CreateContact")]
-    public  IActionResult CreateContact([FromBody] Contact contact)
+    public async Task<IActionResult> CreateContact([FromBody]Contact contact)
     {
-        return CreatedAtAction(nameof(GetContactById), new { id = contact.id });
+        await _contactRepository.CreateContact(contact);
+        return CreatedAtAction(nameof(GetContactById), new { id = contact.id }, contact);
+    }
+    
+    [HttpPut("/UpdateContactInfo/{id}")]
+    public async Task<IActionResult> UpdateContactInfo([FromRoute]string id, Contact contact)
+    {
+        await _contactRepository.UpdateContact(id, contact);
+        return Ok(contact);
+    }
+    
+    [HttpPut("/CancelContactById/{id}")]
+    public async Task<IActionResult> CancelContactById(string id)
+    {
+        await _contactRepository.CancelContactById(id);
+        return Ok("Contact is cancelled!");
     }
 }
