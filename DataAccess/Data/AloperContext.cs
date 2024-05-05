@@ -19,6 +19,8 @@ public class AloperContext : DbContext
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Furniture> Furnitures { get; set; }
     public DbSet<Service>  Services { get; set; }
+    public DbSet<ContactService> ContactServices { get; set; }
+    public DbSet<ContactFurniture> ContactFurnitures { get; set; }
     
     private string GetConnectionString()
     {
@@ -34,7 +36,7 @@ public class AloperContext : DbContext
         {
             options.EnableSensitiveDataLogging();
             options.EnableDetailedErrors();
-            options.UseSqlServer(GetConnectionString());
+            options.UseSqlServer("Server=(local);Database=Aloper;uid=sa;pwd=123456@Aa;Trusted_Connection=false;TrustServerCertificate=True;");
         }
     }
 

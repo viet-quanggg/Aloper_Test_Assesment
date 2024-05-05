@@ -1,5 +1,7 @@
 using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using Repository.IRepositories;
+using Repository.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AloperContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

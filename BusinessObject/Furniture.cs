@@ -1,14 +1,19 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
 namespace BusinessObject;
 
 public class Furniture
 {
-    public int idFurniture;
-    public decimal price;
-    public string note;
-    public string name;
-    public string status;
-    public bool isActive;
+    [Key]
+    public int idFurniture { get; set; }
+    public decimal price { get; set; }
+    public string note { get; set; }
+    public string name { get; set; }
+    public string status { get; set; }
+    public bool isActive { get; set; }
     
+    [JsonIgnore]
     public ICollection<ContactFurniture> ContactFurnitures { get; set; } = new List<ContactFurniture>();
 
 }
