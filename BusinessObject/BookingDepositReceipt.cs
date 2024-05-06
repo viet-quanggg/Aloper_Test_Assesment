@@ -3,41 +3,6 @@ namespace BusinessObject;
 public class BookingDepositReceipt
 {
     
-    
-        public const int SaleNameIndex = 15;
-        public const int SalePassportIndex = 16;
-        public const int SalePhoneIndex = 17;
-        public const int SalePositionIndex = 18;
-
-    
-        public const int CustomerNameIndex = 22;
-        public const int CustomerPassportIndex = 23;
-        public const int CustomerPhoneIndex = 24;
-        public const int CustomerPlaceIndex = 25;
-    
-        
-        public const int RentalAddressIndex = 30;
-        public const int RoomCodeIndex = 31;
-        public const int LeaseTermIndex = 31;
-        public const int RentalFeeIndex = 32;
-        public const int CheckinDateIndex = 32;
-        public const int DepositAmountIndex = 33;
-        public const int AdditionDepositAmountIndex = 34;
-        public const int AdditionDepositDeadlineIndex = 36;
-        public const int RewardProgramIndex = 37;
-    
-    
-
-        public const int ElectricityIndex = 40;
-        public const int WaterIndex = 40;
-        public const int ParkingIndex = 41;
-        public const int ManagementIndex = 41;
-        public const int OthersIndex = 42;
-    
-
-        public const int CustomerSignature = 61;
-        public const int SaleSignature = 63;
-    
 
     
     public DateTime ReceiptDate { get; set; }
