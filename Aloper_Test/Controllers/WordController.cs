@@ -14,7 +14,7 @@ public class WordController : ControllerBase
 {
 
     [HttpPost]
-    public async Task<IActionResult> ReadContactFromDoc([FromForm] BookingDepositReceipt depositReceipt)
+    public async Task<IActionResult> ReadContactFromDoc([FromBody] BookingDepositReceipt depositReceipt)
     {
         string path = Path.Combine(Directory.GetCurrentDirectory(), "Exports", "Test Aloper.docx");
         string export = $"Export_{Guid.NewGuid()}.docx";
@@ -38,60 +38,162 @@ public class WordController : ControllerBase
                     sfn1.Text = sfn1.Text.Replace(".........................................................................................", receipt.SaleFullName);
                 }
 
-                // var sfn = paragraphs[15].InnerText.Split(":")[1].Trim();
-                // sfn.Replace(sfn, receipt.SaleFullName);
-
-                // paragraphs[16].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[16].InnerText.Split(":")[1].Trim(), receipt.SalePassportNumber);
-                // paragraphs[17].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[17].InnerText.Split(":")[1].Trim(), receipt.SalePhoneNumber);
-                // paragraphs[18].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[18].InnerText.Split(":")[1].Trim(), receipt.SalePosition);
-                //
-                // paragraphs[22].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[22].InnerText.Split(":")[1].Trim(), receipt.CustomerFullName);
-                // paragraphs[23].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[23].InnerText.Split(":")[1].Trim(), receipt.CustomerPassportNumber);
-                // paragraphs[24].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[24].InnerText.Split(":")[1].Trim(), receipt.CustomerPhoneNumber);
-                // paragraphs[25].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[25].InnerText.Split(":")[1].Trim(), receipt.CustomerPlaceOfResidence);
-                // paragraphs[26].InnerText.Replace(paragraphs[26].InnerText, "");
-                //
-                // paragraphs[30].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[30].InnerText.Split(":")[1].Trim(), receipt.Address);
-                // paragraphs[31].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[31].InnerText.Split(":")[1].Trim(), receipt.RoomCode);
-                // paragraphs[31].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[31].InnerText.Split(":")[1].Trim(), receipt.LeaseTerm);
-                // paragraphs[32].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[32].InnerText.Split(":")[1].Trim(), receipt.RentalFee);
-                // // paragraphs[32].InnerText.Split(":")[1].Trim()
-                // //     .Replace(paragraphs[32].InnerText.Split(":")[1].Trim(), receipt.CheckinDate.ToString());
-                // paragraphs[33].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[33].InnerText.Split(":")[1].Trim(), receipt.BookingDepositAmount);
-                // paragraphs[34].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[34].InnerText.Split(":")[1].Trim(), receipt.AdditionalDepositAmount);
-                // // paragraphs[35].InnerText.Split(":")[1].Trim()
-                // //     .Replace(paragraphs[35].InnerText.Split(":")[1].Trim(), receipt.AdditionalDepositPaymentDeadline);
-                // paragraphs[36].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[36].InnerText.Split(":")[1].Trim(), receipt.RewardProgram);
-                //
-                // paragraphs[43].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[43].InnerText.Split(":")[1].Trim(), receipt.Water);
-                // paragraphs[43].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[43].InnerText.Split(":")[1].Trim(), receipt.Electricity);
-                // paragraphs[44].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[44].InnerText.Split(":")[1].Trim(), receipt.Parking);
-                // paragraphs[44].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[44].InnerText.Split(":")[1].Trim(), receipt.ManagementFee);
-                // paragraphs[45].InnerText.Split(":")[1].Trim()
-                //     .Replace(paragraphs[45].InnerText.Split(":")[1].Trim(), receipt.Others);
+                var spn = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("............................................"));
+                if (spn != null)
+                {
+                    spn.Text = spn.Text.Replace("............................................", receipt.SalePassportNumber);
+                }
+                
+                var sphn = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("............................................................................"));
+                if (sphn != null)
+                {
+                    sphn.Text = sphn.Text.Replace("............................................................................", receipt.SalePhoneNumber);
+                }
+                
+                var position = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("............................................................................................."));
+                if (position != null)
+                {
+                    position.Text = position.Text.Replace(".............................................................................................", receipt.SalePosition);
+                }
+                
+                var cpn = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("..........................................."));
+                if (cpn != null)
+                {
+                    cpn.Text = cpn.Text.Replace("...........................................", receipt.CustomerPassportNumber);
+                }
+                
+                var cfn = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("........................................................................................"));
+                if (cfn != null)
+                {
+                    cfn.Text = cfn.Text.Replace("........................................................................................", receipt.CustomerFullName);
+                }
+                
+                var cphn = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("............................................................................"));
+                if (cphn != null)
+                {
+                    cphn.Text = cphn.Text.Replace("............................................................................", receipt.CustomerPhoneNumber);
+                }
+                
+                var place = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains(".............................................................\r\n.............................................................................................................................\r\n"));
+                if (place != null)
+                {
+                    place.Text = place.Text.Replace(".............................................................\r\n.............................................................................................................................\r\n", receipt.CustomerPlaceOfResidence);
+                }
+                
+                var address = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("................................................................................................."));
+                if (address != null)
+                {
+                    address.Text = address.Text.Replace(".................................................................................................", receipt.Address);
+                }
+                
+                var roomCode = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("........................"));
+                if (roomCode != null)
+                {
+                    roomCode.Text = roomCode.Text.Replace("........................", receipt.RoomCode);
+                }
+                
+                var leaseTerm = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("...................."));
+                if (leaseTerm != null)
+                {
+                    leaseTerm.Text = leaseTerm.Text.Replace("....................", receipt.LeaseTerm);
+                }
+                
+                var rentalFee = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("............................"));
+                if (rentalFee != null)
+                {
+                    rentalFee.Text = rentalFee.Text.Replace("............................", receipt.RentalFee);
+                }
+                
+                var checkin = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("..............."));
+                if (checkin != null)
+                {
+                    checkin.Text = checkin.Text.Replace("...............", receipt.CheckinDate.ToLongDateString());
+                }
+                
+                var depositAmount = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("................................................."));
+                if (depositAmount != null)
+                {
+                    depositAmount.Text = depositAmount.Text.Replace(".................................................", receipt.BookingDepositAmount);
+                }
+                
+                var adddepositAmount = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("................................................."));
+                if (adddepositAmount != null)
+                {
+                    adddepositAmount.Text = depositAmount.Text.Replace(".................................................", receipt.AdditionalDepositAmount);
+                }
+                
+                var adddepositAmountdl = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("............"));
+                if (adddepositAmountdl != null)
+                {
+                    adddepositAmountdl.Text = adddepositAmountdl.Text.Replace("............", receipt.AdditionalDepositPaymentDeadline.ToLongDateString());
+                }
+                
+                var elec = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("..............................."));
+                if (elec != null)
+                {
+                    elec.Text = elec.Text.Replace("...............................", receipt.Electricity);
+                }
+                
+                var wa = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("........................................."));
+                if (wa != null)
+                {
+                    wa.Text = wa.Text.Replace(".........................................", receipt.Water);
+                }
+                
+                var pa = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("................................"));
+                if (pa != null)
+                {
+                    pa.Text = pa.Text.Replace("................................", receipt.Parking);
+                }
+                
+                var mana = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("....................."));
+                if (mana != null)
+                {
+                    mana.Text = mana.Text.Replace(".....................", receipt.ManagementFee);
+                }
+                
+                var o = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("..............................................................................."));
+                if (o != null)
+                {
+                    o.Text = o.Text.Replace("...............................................................................", receipt.Others);
+                }
+                
+                var re = reportDocument.MainDocumentPart.Document.Descendants<Text>().FirstOrDefault(c =>
+                    c.Text.Contains("...................................."));
+                if (re != null)
+                {
+                    re.Text = re.Text.Replace("....................................", receipt.RewardProgram);
+                }
+                
+                
                 reportDocument.Save();
                 reportDocument.Close();
             }
 
             files = System.IO.File.ReadAllBytes(newPath);
+            
+            
+            
             return File(
                 fileContents: files,
                 contentType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

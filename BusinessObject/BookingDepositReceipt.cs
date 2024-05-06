@@ -6,8 +6,6 @@ public class BookingDepositReceipt
 
     
     public DateTime ReceiptDate { get; set; }
-    public string CustomerSign { get; set; }
-    public string SaleSign { get; set; }
     
 
         public string SaleFullName { get; set; }
