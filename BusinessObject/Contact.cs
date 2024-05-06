@@ -25,8 +25,6 @@ public class Contact
     public string signature { get; set; }
     public DateTime contractEndDate { get; set; }
     public string note { get; set; }
-    [JsonIgnore]
     public ICollection<ContactFurniture> ContactFurnitures { get; set; } = new List<ContactFurniture>();
-    [JsonIgnore]
     public ICollection<ContactService> ContactServices { get; set; } = new List<ContactService>();
 }

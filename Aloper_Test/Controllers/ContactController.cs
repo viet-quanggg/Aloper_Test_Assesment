@@ -1,4 +1,5 @@
 using BusinessObject;
+using BusinessObject.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Repository.IRepositories;
 
@@ -32,14 +33,14 @@ public class ContactController : ControllerBase
     }
 
     [HttpPost("/CreateContact")]
-    public async Task<IActionResult> CreateContact([FromBody]Contact contact)
+    public async Task<IActionResult> CreateContact([FromBody]ContactCreateModel contact)
     {
         await _contactRepository.CreateContact(contact);
         return CreatedAtAction(nameof(GetContactById), new { id = contact.id }, contact);
     }
     
     [HttpPut("/UpdateContactInfo/{id}")]
-    public async Task<IActionResult> UpdateContactInfo([FromRoute]string id, Contact contact)
+    public async Task<IActionResult> UpdateContactInfo([FromRoute]string id, ContactCreateModel contact)
     {
         await _contactRepository.UpdateContact(id, contact);
         return Ok(contact);

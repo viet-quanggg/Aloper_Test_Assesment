@@ -52,11 +52,15 @@ public class AloperContext : DbContext
         modelBuilder.Entity<Furniture>(entity =>
         {
             entity.HasKey(f => f.idFurniture);
+            entity.HasMany(f => f.ContactFurnitures)
+                .WithOne(f => f.Furniture); 
         });
         
         modelBuilder.Entity<Service>(entity =>
         {
             entity.HasKey(f => f.idService);
+            entity.HasMany(s => s.ContactServices)
+                .WithOne(s => s.Service);
         });
         
         //Configure between Contact and Furniture
