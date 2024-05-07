@@ -3,7 +3,11 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using Aspose.Words;
 using DocumentFormat.OpenXml;
+using Microsoft.Office.Interop.Word;
+using Document = Microsoft.Office.Interop.Word.Document;
+using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
 
 
 namespace Aloper_Test.Controllers;
@@ -191,6 +195,22 @@ public class WordController : ControllerBase
             }
 
             files = System.IO.File.ReadAllBytes(newPath);
+
+            
+
+            try
+            {
+                Aspose.Words.Document doc = new Aspose.Words.Document(newPath);
+                string pdfPath = Path.Combine(Directory.GetCurrentDirectory(), "PDFExports",
+                    $"{Guid.NewGuid()}Export.pdf");
+
+                doc.Save(pdfPath, SaveFormat.Pdf);
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
             
             
             
